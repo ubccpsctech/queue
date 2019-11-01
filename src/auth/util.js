@@ -19,7 +19,7 @@ const JWT_SECRET = process.env.JWT_SECRET || 'useastrongkeyinproduction!!!'
  */
 module.exports.createOrUpdateUser = async (req, uid) => {
   const [user] = await User.findOrCreate({ where: { uid } })
-  const name = req.get('displayname')
+  const name = req.get('displayname') || req.get('ubcedusispreferredgivenname')
   if (name && name !== user.universityName) {
     user.universityName = name
     await user.save()
