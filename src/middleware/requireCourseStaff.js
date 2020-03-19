@@ -1,14 +1,15 @@
 const { ApiError } = require('../api/util')
 
 module.exports = (req, res, next) => {
-  if (!req.params.courseId) {
+  const param = req.params.courseId || req.query.courseId
+  if (!param) {
     // Missing courseId in request
     next(new ApiError(400, 'Invalid course ID'))
   } else if (res.locals.userAuthz.isAdmin) {
     // Admins can do anything!
     next()
   } else {
-    const courseId = Number.parseInt(req.params.courseId, 10)
+    const courseId = Number.parseInt(param, 10)
     if (Number.isNaN(courseId)) {
       next(new ApiError(400, 'Invalid course ID'))
     } else if (res.locals.userAuthz.staffedCourseIds.indexOf(courseId) === -1) {
