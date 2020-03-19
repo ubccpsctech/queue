@@ -1,14 +1,12 @@
 const router = require('express').Router()
-
 const { User, Sequelize } = require('../models')
-
 const { failIfErrors, ApiError } = require('./util')
-const requireAdmin = require('../middleware/requireAdmin')
+const requireCourseStaff = require('../middleware/requireCourseStaff')
 const safeAsync = require('../middleware/safeAsync')
 
 router.get(
   '/users',
-  [requireAdmin, failIfErrors],
+  [requireCourseStaff, failIfErrors],
   safeAsync(async (req, res, next) => {
     const { q } = req.query
     if (q === null || q === undefined) {

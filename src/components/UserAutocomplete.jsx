@@ -12,6 +12,7 @@ import 'react-bootstrap-typeahead/css/Typeahead-bs4.css'
 import axios from '../actions/axios'
 
 const UserAutocomplete = props => {
+  const { courseId } = props
   const uidInput = useInput('')
   const [uidQuery] = useDebounce(uidInput.value, 300)
   const [userSuggestions, setUserSuggestions] = useState([])
@@ -27,6 +28,7 @@ const UserAutocomplete = props => {
       .get('/api/autocomplete/users', {
         params: {
           q: uidQuery,
+          courseId,
         },
         cancelToken: source.token,
       })
@@ -79,6 +81,8 @@ const UserAutocomplete = props => {
 }
 
 UserAutocomplete.propTypes = {
+  // admin can always look up anyone; staff need the courseId for authorization
+  courseId: PropTypes.number.isRequired,
   selected: PropTypes.arrayOf(
     PropTypes.shape({
       uid: PropTypes.string,

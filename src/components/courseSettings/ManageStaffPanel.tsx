@@ -67,6 +67,7 @@ const ManageStaffPanel = ({
       </CardHeader>
       <CardBody>
         <AddStaff
+          course={course}
           onAddStaff={(staff: Record<string, string>) => {
             const { id, name } = staff
             addCourseStaff(course.id, id, name)

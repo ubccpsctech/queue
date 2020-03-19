@@ -13,6 +13,7 @@ import UserAutocomplete from './UserAutocomplete'
 const { uidName, uidArticle } = getConfig().publicRuntimeConfig
 
 const AddStaff = props => {
+  const courseId = props.course.id
   const [pendingUser, setPendingUser] = useState([])
 
   const handleAddStaff = e => {
@@ -35,6 +36,7 @@ const AddStaff = props => {
         <InputGroup>
           <UserAutocomplete
             id="user-input"
+            courseId={courseId}
             selected={pendingUser}
             onChange={setPendingUser}
             placeholder={`Enter ${uidArticle} ${uidName}`}
@@ -57,6 +59,7 @@ const AddStaff = props => {
 }
 
 AddStaff.propTypes = {
+  course: PropTypes.Object.isRequired,
   // This is just an array of user IDs (not UIDs)
   existingStaff: PropTypes.arrayOf(PropTypes.number),
   onAddStaff: PropTypes.func.isRequired,
